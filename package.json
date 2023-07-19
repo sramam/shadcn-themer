@@ -1,0 +1,36 @@
+{
+  "name": "shadcn-themer",
+  "version": "1.0.0",
+  "description": "Custom theme for shadcn/ui",
+  "main": "dist/index.js",
+  "files": [
+    "dist/*",
+    "themes/*"
+  ],
+  "bin": {
+    "shadcn-themer": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "sramam",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.45",
+    "@types/postcss-js": "^4.0.1",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "postcss": "^8.4.26",
+    "postcss-import": "^15.1.0",
+    "postcss-js": "^4.0.1",
+    "tailwindcss-animate": "^1.0.6"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}

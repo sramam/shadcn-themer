@@ -1,0 +1,77 @@
+/* To customize, `shadcn-themer customize [dir]` dir defaults to './themes'. */
+@layer base {
+  :root {
+    --background: hsl(20, 20%, 97.1%);
+    --foreground: hsl(0, 0%, 21.2%);
+
+    --muted: hsl(0, 0%, 82%);
+    --muted-foreground: hsl(0, 0%, 40%);
+
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(222.2, 47.4%, 11.2%);
+
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(222.2, 47.4%, 11.2%);
+
+    --border: hsl(214.3, 31.8%, 91.4%);
+    --input: hsl(214.3, 31.8%, 91.4%);
+
+    --primary: hsl(197, 77.1%, 60.6%);
+    --primary-foreground: hsl(195, 80%, 98%);
+
+    --secondary: hsl(196, 43.6%, 56.9%);
+    --secondary-foreground: hsl(192, 45.5%, 97.8%);
+
+    --accent: hsl(37, 83.4%, 69.2%);
+    --accent-foreground: hsl(40, 75%, 98.4%);
+
+    --destructive: hsl(346, 84%, 60.8%);
+    --destructive-foreground: hsl(345, 80%, 98%);
+
+    --ring: hsl(215, 20.2%, 65.1%);
+
+    --radius: 0.5rem;
+  }
+
+  :dark {
+    --background: hsl(0, 0%, 10.2%);
+    --foreground: hsl(0, 0%, 100%);
+
+    --muted: hsl(0, 0%, 68.2%);
+    --muted-foreground: hsl(0, 0%, 33.3%);
+
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(222.2, 47.4%, 11.2%);
+
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(222.2, 47.4%, 11.2%);
+
+    --border: hsl(214.3, 31.8%, 91.4%);
+    --input: hsl(214.3, 31.8%, 91.4%);
+
+    --primary: hsl(205, 51.7%, 53.7%);
+    --primary-foreground: hsl(200, 50%, 97.6%);
+
+    --secondary: hsl(0, 0%, 45.9%);
+    --secondary-foreground: hsl(0, 0%, 97.3%);
+
+    --accent: hsl(211, 59.2%, 41.4%);
+    --accent-foreground: hsl(214, 46.7%, 97.1%);
+
+    --destructive: hsl(0, 100%, 65.1%);
+    --destructive-foreground: hsl(0, 100%, 98.2%);
+
+    --ring: hsl(215, 20.2%, 65.1%);
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
