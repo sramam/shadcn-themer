@@ -22,7 +22,7 @@ export default {
   presets: [ await shadcnPreset()]
   content: [
     './@/**/*.{jsx,tsx}',
-	],
+  ],
 } satisfies Config;
 
 ```
