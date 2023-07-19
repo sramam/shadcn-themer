@@ -4,12 +4,11 @@ import cssLoader from "./cssLoader";
 export const shadcnPlugin = (fPath: string) =>
   plugin(
     // 1. Add CSS variable definitions to the base layer.
-    async ({ addBase }) => {
-      const css = await cssLoader(fPath);
+     ({ addBase }) => {
+      const css = cssLoader(fPath);
       const baseLayer = css["@layer base"];
       baseLayer.forEach((el: any) => addBase(el));
     },
-
     // 2. Extend the tailwind theme with "theme-able" utilities
     {
       theme: {

@@ -16,15 +16,14 @@ const fs_1 = __importDefault(require("fs"));
 const postcss_1 = __importDefault(require("postcss"));
 const postcss_import_1 = __importDefault(require("postcss-import"));
 const postcss_js_1 = __importDefault(require("postcss-js"));
-function cssLoader(fPath) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return (0, postcss_1.default)([(0, postcss_import_1.default)()])
-            .process(fs_1.default.readFileSync(fPath, "utf8"), {
-            from: fPath,
-            parser: postcss_1.default.parse,
-        })
-            .then((result) => postcss_js_1.default.objectify(result.root));
-    });
-}
-exports.default = cssLoader;
+const synchronized_promise_1 = __importDefault(require("synchronized-promise"));
+const cssLoader = (fPath) => __awaiter(void 0, void 0, void 0, function* () {
+    return (0, postcss_1.default)([(0, postcss_import_1.default)()])
+        .process(fs_1.default.readFileSync(fPath, "utf8"), {
+        from: fPath,
+        parser: postcss_1.default.parse,
+    })
+        .then((result) => postcss_js_1.default.objectify(result.root));
+});
+exports.default = (0, synchronized_promise_1.default)(cssLoader);
 //# sourceMappingURL=cssLoader.js.map

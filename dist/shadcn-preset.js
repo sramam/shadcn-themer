@@ -22,15 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -38,31 +29,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.shadcnPreset = void 0;
 const tailwindcss_animate_1 = __importDefault(require("tailwindcss-animate"));
 const shadcn_plugin_1 = require("./shadcn-plugin");
+const synchronized_promise_1 = __importDefault(require("synchronized-promise"));
 function selectTheme({ theme, themesDir, }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const Themer = yield Promise.resolve(`${`${themesDir}/themes.js`}`).then(s => __importStar(require(s)));
-        const themes = Themer(themesDir);
-        if (!Object.keys(themes).includes(theme)) {
-            throw new Error(`Unknown theme '${theme}' requested`);
-        }
-        return themes(themesDir)[theme];
-    });
+    // convert the async import to a sync method. It seems
+    // tailwind struggled to deal with config which is promise.
+    const importer = (0, synchronized_promise_1.default)((pkg) => Promise.resolve(`${pkg}`).then(s => __importStar(require(s))));
+    const Themer = importer(`${themesDir}/themes.js`);
+    const themes = Themer(themesDir);
+    if (!Object.keys(themes).includes(theme)) {
+        throw new Error(`Unknown theme '${theme}' requested`);
+    }
+    return themes(themesDir)[theme];
 }
 const shadcnPreset = ({ theme = "default", themesDir = "./themes", } = {
     theme: "default",
     themesDir: `${__dirname}/themes`,
-}) => __awaiter(void 0, void 0, void 0, function* () {
-    return ({
-        content: [],
-        darkMode: "class",
-        plugins: [
-            tailwindcss_animate_1.default,
-            (0, shadcn_plugin_1.shadcnPlugin)(yield selectTheme({
-                theme,
-                themesDir,
-            })),
-        ],
-    });
+}) => ({
+    content: [],
+    darkMode: "class",
+    plugins: [
+        tailwindcss_animate_1.default,
+        (0, shadcn_plugin_1.shadcnPlugin)(selectTheme({
+            theme,
+            themesDir,
+        })),
+    ],
 });
 exports.shadcnPreset = shadcnPreset;
 exports.default = exports.shadcnPreset;

@@ -1,13 +1,15 @@
 import fs from "fs";
 import postcss, { Root } from "postcss";
 import postcssImport from "postcss-import";
-import postcssJs, { CssInJs } from "postcss-js";
+import postcssJs from "postcss-js";
+import syncPromise from "synchronized-promise";
 
-export default async function cssLoader(fPath: string) {
-  return postcss([postcssImport()])
+const cssLoader = async (fPath: string) =>
+  postcss([postcssImport()])
     .process(fs.readFileSync(fPath, "utf8") as any, {
       from: fPath,
       parser: postcss.parse,
     })
     .then((result) => postcssJs.objectify(result.root as Root));
-}
+
+export default syncPromise(cssLoader);

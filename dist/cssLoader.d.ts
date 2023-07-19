@@ -1,3 +1,4 @@
 import postcssJs from "postcss-js";
-export default function cssLoader(fPath: string): Promise<postcssJs.CssInJs>;
+declare const _default: (this: unknown, fPath: string) => postcssJs.CssInJs;
+export default _default;
 //# sourceMappingURL=cssLoader.d.ts.map

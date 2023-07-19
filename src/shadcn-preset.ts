@@ -1,18 +1,21 @@
 import type { Config } from "tailwindcss";
 import tailwindCssAnimate from "tailwindcss-animate";
 import { shadcnPlugin } from "./shadcn-plugin";
-// import * as Themer from "../themes/themes";
+import syncPromise from "synchronized-promise";
 
-type Themes = (themesDir: string) => Record<string, string>;
+export type Themes = (themesDir: string) => Record<string, string>;
 
-async function selectTheme({
+function selectTheme({
   theme,
   themesDir,
 }: {
   theme: string;
   themesDir: string;
 }) {
-  const Themer = await import(`${themesDir}/themes.js`);
+  // convert the async import to a sync method. It seems
+  // tailwind struggled to deal with config which is promise.
+  const importer = syncPromise((pkg: string) => import(pkg));
+  const Themer = importer(`${themesDir}/themes.js`);
   const themes = Themer(themesDir);
   if (!Object.keys(themes).includes(theme)) {
     throw new Error(`Unknown theme '${theme}' requested`);
@@ -20,7 +23,7 @@ async function selectTheme({
   return themes(themesDir)[theme];
 }
 
-export const shadcnPreset = async (
+export const shadcnPreset = (
   {
     theme = "default",
     themesDir = "./themes",
@@ -31,13 +34,13 @@ export const shadcnPreset = async (
     theme: "default",
     themesDir: `${__dirname}/themes`,
   }
-): Promise<Config> => ({
+): Config => ({
   content: [],
   darkMode: "class",
   plugins: [
     tailwindCssAnimate,
     shadcnPlugin(
-      await selectTheme({
+      selectTheme({
         theme,
         themesDir,
       })
