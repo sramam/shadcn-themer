@@ -92,3 +92,4 @@ const shadcnPlugin = (fPath) => (0, plugin_1.default)(
 });
 exports.shadcnPlugin = shadcnPlugin;
 exports.default = exports.shadcnPlugin;
+//# sourceMappingURL=shadcn-plugin.js.map

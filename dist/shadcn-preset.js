@@ -66,3 +66,4 @@ const shadcnPreset = ({ theme = "default", themesDir = "./themes", } = {
 });
 exports.shadcnPreset = shadcnPreset;
 exports.default = exports.shadcnPreset;
+//# sourceMappingURL=shadcn-preset.js.map

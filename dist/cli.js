@@ -65,3 +65,4 @@ function main() {
     });
 }
 main();
+//# sourceMappingURL=cli.js.map
