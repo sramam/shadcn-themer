@@ -7,7 +7,8 @@ import type { Config } from "tailwindcss";
  */
 export default function configSync(fPath: string): Config {
   try {
-    const result = execaSync("node", [`${__dirname}/config.js`, fPath]);
+    // const result = execaSync("node", [`${process.cwd()}/node_modules/shadcn-themer/dist/config/config.js`, fPath]);
+    const result = execaSync("node", ['-e', 'import(process.argv[2]).then((c) => console.log(JSON.stringify(c.default, null, 2)));', fPath]);
     return JSON.parse(result.stdout);
   } catch (err) {
     console.error(err);

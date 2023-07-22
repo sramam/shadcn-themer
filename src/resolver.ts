@@ -10,7 +10,7 @@ export function resolveThemeDir(theme: string, themeDir: string): string {
 }
 
 const resolvedDir = (fPath: string) => {
-  fPath = path.relative(process.cwd(), path.resolve(fPath));
+  fPath = path.resolve(fPath);
   try {
     fs.statSync(fPath);
     return fPath;

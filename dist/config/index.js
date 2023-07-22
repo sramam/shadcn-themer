@@ -7,7 +7,7 @@ const execaSync = require("execa").sync;
  */
 function configSync(fPath) {
     try {
-        const result = execaSync("node", [`${__dirname}/config.js`, fPath]);
+        const result = execaSync("node", ['-e', 'import(process.argv[2]).then((c) => console.log(JSON.stringify(c.default, null, 2)));', fPath]);
         return JSON.parse(result.stdout);
     }
     catch (err) {
