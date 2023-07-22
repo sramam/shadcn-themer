@@ -8,7 +8,10 @@ const execaSync = require("execa").sync;
 function configSync(fPath) {
     try {
         // const result = execaSync("node", [`${process.cwd()}/node_modules/shadcn-themer/dist/config/config.js`, fPath]);
-        const result = execaSync("node", ['-e', 'import(process.argv[2]).then((c) => console.log(JSON.stringify(c.default, null, 2)));', fPath]);
+        const result = execaSync("node", [
+            "-e",
+            `import(${fPath}).then((c) => console.log(JSON.stringify(c.default, null, 2)));`,
+        ]);
         return JSON.parse(result.stdout);
     }
     catch (err) {
