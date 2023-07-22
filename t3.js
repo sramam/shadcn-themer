@@ -1,3 +1,4 @@
 const cssLoader = require("./dist/cssLoader").default;
 
-cssLoader("./themes/style.css").then((r) => console.log(JSON.stringify(r)));
+const cssJson = cssLoader("./themes/style.css"); // .then((r) => console.log(JSON.stringify(r)));
+console.log(JSON.stringify(cssJson, null, 2));

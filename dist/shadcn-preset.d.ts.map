@@ -1,1 +1,1 @@
-{"version":3,"file":"shadcn-preset.d.ts","sourceRoot":"","sources":["../src/shadcn-preset.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,aAAa,CAAC;AAK1C,MAAM,MAAM,MAAM,GAAG,CAAC,SAAS,EAAE,MAAM,KAAK,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;AAoBnE,eAAO,MAAM,YAAY;;;MAWtB,MAYD,CAAC;AAEH,eAAe,YAAY,CAAC"}
+{"version":3,"file":"shadcn-preset.d.ts","sourceRoot":"","sources":["../src/shadcn-preset.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,aAAa,CAAC;AAK1C,eAAO,MAAM,YAAY;;;;MAatB,MAgBF,CAAC"}

@@ -1,86 +1,90 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.shadcnPlugin = void 0;
 const plugin_1 = __importDefault(require("tailwindcss/plugin"));
+const fs = __importStar(require("fs"));
 const cssLoader_1 = __importDefault(require("./cssLoader"));
-const shadcnPlugin = (fPath) => (0, plugin_1.default)(
-// 1. Add CSS variable definitions to the base layer.
-({ addBase }) => {
-    const css = (0, cssLoader_1.default)(fPath);
-    const baseLayer = css["@layer base"];
-    baseLayer.forEach((el) => addBase(el));
-}, 
-// 2. Extend the tailwind theme with "theme-able" utilities
-{
-    theme: {
-        container: {
-            center: true,
-            padding: "2rem",
-            screens: {
-                "2xl": "1400px",
-            },
-        },
-        extend: {
-            colors: {
-                border: "hsl(var(--border))",
-                input: "hsl(var(--input))",
-                ring: "hsl(var(--ring))",
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
-                primary: {
-                    DEFAULT: "hsl(var(--primary))",
-                    foreground: "hsl(var(--primary-foreground))",
-                },
-                secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
-                    foreground: "hsl(var(--secondary-foreground))",
-                },
-                destructive: {
-                    DEFAULT: "hsl(var(--destructive))",
-                    foreground: "hsl(var(--destructive-foreground))",
-                },
-                muted: {
-                    DEFAULT: "hsl(var(--muted))",
-                    foreground: "hsl(var(--muted-foreground))",
-                },
-                accent: {
-                    DEFAULT: "hsl(var(--accent))",
-                    foreground: "hsl(var(--accent-foreground))",
-                },
-                popover: {
-                    DEFAULT: "hsl(var(--popover))",
-                    foreground: "hsl(var(--popover-foreground))",
-                },
-                card: {
-                    DEFAULT: "hsl(var(--card))",
-                    foreground: "hsl(var(--card-foreground))",
-                },
-            },
-            borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
-            },
-            keyframes: {
-                "accordion-down": {
-                    from: { height: "0" },
-                    to: { height: "var(--radix-accordion-content-height)" },
-                },
-                "accordion-up": {
-                    from: { height: "var(--radix-accordion-content-height)" },
-                    to: { height: "0" },
-                },
-            },
-            animation: {
-                "accordion-down": "accordion-down 0.2s ease-out",
-                "accordion-up": "accordion-up 0.2s ease-out",
-            },
-        },
-    },
-});
+const config_1 = __importDefault(require("./config"));
+const shadcnPlugin = ({ themeDir, theme, debugDir, }) => {
+    theme = `${theme}.css`.replace(".css.css", ".css");
+    const themeFile = `${themeDir}/${theme}`;
+    const configFile = `${themeDir}/config.js`;
+    return (0, plugin_1.default)(({ addBase }) => addBase(loadBaseLayer(themeFile, debugDir)), loadConfig(configFile, debugDir));
+};
 exports.shadcnPlugin = shadcnPlugin;
-exports.default = exports.shadcnPlugin;
+function loadBaseLayer(themeFile, debugDir) {
+    try {
+        const cssInJs = (0, cssLoader_1.default)(themeFile);
+        logDebugFile({ debugDir, fname: "cssInJs.json", data: cssInJs });
+        const baseLayer = cssInJs["@layer base"];
+        logDebugFile({ debugDir, fname: "baseLayer.json", data: baseLayer });
+        return baseLayer;
+    }
+    catch (err) {
+        const { message, stack } = err, rest = __rest(err, ["message", "stack"]);
+        logDebugFile({
+            debugDir,
+            fname: "cssError.txt",
+            data: Object.assign({ message, stack }, rest),
+        });
+        throw err;
+    }
+}
+function loadConfig(configFile, debugDir) {
+    let config = { content: [] };
+    let error = null;
+    try {
+        config = (0, config_1.default)(configFile);
+    }
+    catch (err) {
+        error = err;
+    }
+    finally {
+        logDebugFile({ debugDir, fname: "config.json", data: config });
+        return config;
+    }
+}
+function logDebugFile({ debugDir, fname, data, }) {
+    if (debugDir && !!data) {
+        fs.mkdirSync(debugDir, { recursive: true });
+        fs.writeFileSync(`${debugDir}/${fname}`, JSON.stringify(data, null, 2), "utf8");
+    }
+}
 //# sourceMappingURL=shadcn-plugin.js.map

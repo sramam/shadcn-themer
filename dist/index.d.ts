@@ -1,4 +1,2 @@
-import shadcnPreset from "./shadcn-preset";
-import shadcnPlugin from "./shadcn-plugin";
-export { shadcnPlugin, shadcnPreset };
+export { shadcnPlugin } from "./shadcn-plugin";
 //# sourceMappingURL=index.d.ts.map

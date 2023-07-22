@@ -1,82 +1,74 @@
 import plugin from "tailwindcss/plugin";
-import cssLoader from "./cssLoader";
+import * as fs from "fs";
+import cssLoaderSync from "./cssLoader";
+import configSync from "./config";
+import type { CssInJs } from "postcss-js";
+import { Config } from "tailwindcss";
 
-export const shadcnPlugin = (fPath: string) =>
-  plugin(
-    // 1. Add CSS variable definitions to the base layer.
-     ({ addBase }) => {
-      const css = cssLoader(fPath);
-      const baseLayer = css["@layer base"];
-      baseLayer.forEach((el: any) => addBase(el));
-    },
-    // 2. Extend the tailwind theme with "theme-able" utilities
-    {
-      theme: {
-        container: {
-          center: true,
-          padding: "2rem",
-          screens: {
-            "2xl": "1400px",
-          },
-        },
-        extend: {
-          colors: {
-            border: "hsl(var(--border))",
-            input: "hsl(var(--input))",
-            ring: "hsl(var(--ring))",
-            background: "hsl(var(--background))",
-            foreground: "hsl(var(--foreground))",
-            primary: {
-              DEFAULT: "hsl(var(--primary))",
-              foreground: "hsl(var(--primary-foreground))",
-            },
-            secondary: {
-              DEFAULT: "hsl(var(--secondary))",
-              foreground: "hsl(var(--secondary-foreground))",
-            },
-            destructive: {
-              DEFAULT: "hsl(var(--destructive))",
-              foreground: "hsl(var(--destructive-foreground))",
-            },
-            muted: {
-              DEFAULT: "hsl(var(--muted))",
-              foreground: "hsl(var(--muted-foreground))",
-            },
-            accent: {
-              DEFAULT: "hsl(var(--accent))",
-              foreground: "hsl(var(--accent-foreground))",
-            },
-            popover: {
-              DEFAULT: "hsl(var(--popover))",
-              foreground: "hsl(var(--popover-foreground))",
-            },
-            card: {
-              DEFAULT: "hsl(var(--card))",
-              foreground: "hsl(var(--card-foreground))",
-            },
-          },
-          borderRadius: {
-            lg: "var(--radius)",
-            md: "calc(var(--radius) - 2px)",
-            sm: "calc(var(--radius) - 4px)",
-          },
-          keyframes: {
-            "accordion-down": {
-              from: { height: "0" },
-              to: { height: "var(--radix-accordion-content-height)" },
-            },
-            "accordion-up": {
-              from: { height: "var(--radix-accordion-content-height)" },
-              to: { height: "0" },
-            },
-          },
-          animation: {
-            "accordion-down": "accordion-down 0.2s ease-out",
-            "accordion-up": "accordion-up 0.2s ease-out",
-          },
-        },
-      },
-    }
+export const shadcnPlugin = ({
+  themeDir,
+  theme,
+  debugDir,
+}: {
+  themeDir: string;
+  theme: string;
+  debugDir?: string;
+}) => {
+  theme = `${theme}.css`.replace(".css.css", ".css");
+  const themeFile = `${themeDir}/${theme}`;
+  const configFile = `${themeDir}/config.js`;
+  return plugin(
+    ({ addBase }) => addBase(loadBaseLayer(themeFile, debugDir)),
+    loadConfig(configFile, debugDir)
   );
+};
 
-export default shadcnPlugin;
+function loadBaseLayer(themeFile: string, debugDir?: string): CssInJs {
+  try {
+    const cssInJs = cssLoaderSync(themeFile);
+    logDebugFile({ debugDir, fname: "cssInJs.json", data: cssInJs });
+    const baseLayer = cssInJs["@layer base"];
+    logDebugFile({ debugDir, fname: "baseLayer.json", data: baseLayer });
+    return baseLayer;
+  } catch (err: any) {
+    const { message, stack, ...rest } = err;
+    logDebugFile({
+      debugDir,
+      fname: "cssError.txt",
+      data: { message, stack, ...rest },
+    });
+    throw err;
+  }
+}
+
+function loadConfig(configFile: string, debugDir?: string): Config {
+  let config: Config = { content: [] };
+  let error: Error | null = null;
+  try {
+    config = configSync(configFile);
+  } catch (err: any) {
+    error = err;
+  } finally {
+    logDebugFile({ debugDir, fname: "config.json", data: config });
+    return config;
+  }
+}
+
+function logDebugFile({
+  debugDir,
+  fname,
+  data,
+}: {
+  debugDir?: string;
+  fname: string;
+  data?: any;
+}) {
+  if (debugDir && !!data) {
+    fs.mkdirSync(debugDir, { recursive: true });
+    fs.writeFileSync(
+      `${debugDir}/${fname}`,
+      JSON.stringify(data, null, 2),
+      "utf8"
+    );
+  }
+}

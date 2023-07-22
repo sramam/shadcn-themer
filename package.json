@@ -4,8 +4,8 @@
   "description": "Custom theme for shadcn/ui",
   "main": "dist/index.js",
   "files": [
-    "dist/*",
-    "themes/*"
+    "dist/**/*",
+    "themes/**/*"
   ],
   "bin": {
     "shadcn-themer": "./dist/cli.js"
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "dotenv": "^16.3.1",
+    "execa": "^5.1.1",
     "postcss": "^8.4.26",
     "postcss-import": "^15.1.0",
     "postcss-js": "^4.0.1",
