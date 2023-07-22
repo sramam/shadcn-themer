@@ -10,7 +10,7 @@ export default function configSync(fPath: string): Config {
     // const result = execaSync("node", [`${process.cwd()}/node_modules/shadcn-themer/dist/config/config.js`, fPath]);
     const result = execaSync("node", [
       "-e",
-      `import(${fPath}).then((c) => console.log(JSON.stringify(c.default, null, 2)));`,
+      `import('${fPath}').then((c) => console.log(JSON.stringify(c.default, null, 2)));`,
     ]);
     return JSON.parse(result.stdout);
   } catch (err) {
