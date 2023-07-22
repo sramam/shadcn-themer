@@ -34,10 +34,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const theme_generator_1 = require("./theme_generator");
 function main() {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         const dir = (_a = process.argv[2]) !== null && _a !== void 0 ? _a : "./themes";
+        const { colors, invalidColors } = (0, theme_generator_1.validateColors)(((_b = process.argv[3]) !== null && _b !== void 0 ? _b : "slate,sky").split(","));
+        if (invalidColors.length) {
+            console.error(`Invalid theme colors: ${invalidColors.join("\n")}\n`);
+            console.error(`Valid colors:\n${theme_generator_1.themeColors.map((c) => `  - ${c}\n`)}`);
+            process.exit(-1);
+        }
         const dst = path.resolve(dir);
         const src = path.resolve(`${__dirname}/../themes`);
         let stat;
@@ -60,8 +67,9 @@ function main() {
             console.error(`Source and destination directories have be different`);
             process.exit(-1);
         }
-        fs.cpSync(src, dst, { recursive: true });
-        console.log(`custom shadcn themes initialized to '${dir}'`);
+        fs.copyFileSync(`${src}/config.js`, `${dst}/config.js`);
+        (0, theme_generator_1.generateThemes)(colors, dst, fs.writeFileSync);
+        console.log(`\ncustom shadcn-ui themes initialized to '${dir}'`);
     });
 }
 main();

@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #fff;                 /* white */
+    --foreground: #0a0a0a;              /* neutral-950 */
+  
+    --muted: #f5f5f5;                   /* neutral-100 */
+    --muted-foreground: #737373;        /* neutral-500 */
+  
+    --popover: #fff;                    /* white */
+    --popover-foreground: #0a0a0a;      /* neutral-950 */
+  
+    --card: #fff;                       /* white */
+    --card-foreground: #0a0a0a;         /* neutral-950 */
+  
+    --border: #e5e5e5;                  /* neutral-200 */
+    --input: #e5e5e5;                   /* neutral-200 */
+  
+    --primary: #171717;                 /* neutral-900 */
+    --primary-foreground: #fafafa;      /* neutral-50 */
+  
+    --secondary: #f5f5f5;               /* neutral-100 */
+    --secondary-foreground: #171717;    /* neutral-900 */
+  
+    --accent: #f5f5f5;                  /* neutral-100 */
+    --accent-foreground: #171717;       /* neutral-900 */
+  
+    --destructive: #ef4444;             /* red-500 */
+    --destructive-foreground: #fafafa;  /* neutral-50 */
+  
+    --ring: #a3a3a3;                    /* neutral-400 */
+  
+    --radius: 0.5rem;
+  }
+  
+  .dark {
+    --background: #0a0a0a;              /* neutral-950 */
+    --foreground: #fafafa;              /* neutral-50 */
+  
+    --muted: #262626;                   /* neutral-800 */
+    --muted-foreground: #a3a3a3;        /* neutral-400 */
+  
+    --popover: #0a0a0a;                 /* neutral-950 */
+    --popover-foreground: #fafafa;      /* neutral-50 */
+  
+    --card: #0a0a0a;                    /* neutral-950 */
+    --card-foreground: #fafafa;         /* neutral-50 */
+  
+    --border: #262626;                  /* neutral-800 */
+    --input: #262626;                   /* neutral-800 */
+  
+    --primary: #fafafa;                 /* neutral-50 */
+    --primary-foreground: #171717;      /* neutral-900 */
+  
+    --secondary: #262626;               /* neutral-800 */
+    --secondary-foreground: #fafafa;    /* neutral-50 */
+  
+    --accent: #262626;                  /* neutral-800 */
+    --accent-foreground: #fafafa;       /* neutral-50 */
+  
+    --destructive: #7f1d1d;             /* neutral-900 */
+    --destructive-foreground: #fef2f2;  /* neutral-50 */
+  
+    --ring: [object Object];
+  }
+}
+  
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

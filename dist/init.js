@@ -23,18 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.doesThemeExist = void 0;
+const theme_generator_1 = require("./theme_generator");
 const fs = __importStar(require("fs"));
-function doesThemeExist(theme, themeDir) {
-    const cssFiles = fs
-        .readdirSync(themeDir, {
-        encoding: "utf8",
-        withFileTypes: true,
-    })
-        .filter((f) => f.isFile() &&
-        f.name.endsWith(".css") &&
-        [theme, `${theme}.css`].includes(f.name));
-    return cssFiles.length > 0;
-}
-exports.doesThemeExist = doesThemeExist;
-//# sourceMappingURL=doesThemeExist.js.map
+const { colors } = (0, theme_generator_1.validateColors)("slate,sky,neutral".split(",").map((c) => c.trim()));
+(0, theme_generator_1.generateThemes)(colors, `${__dirname}/../themes`, fs.writeFileSync);
+//# sourceMappingURL=init.js.map

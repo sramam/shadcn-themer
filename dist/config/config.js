@@ -23,6 +23,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 // This simply wraps the dynamic import into a worker script, 
-// which is then invoked syncronously from shadcn-plugin
-Promise.resolve(`${process.argv[2]}`).then(s => __importStar(require(s))).then((c) => console.log(JSON.stringify(c, null, 2)));
+// which is then invoked synchronously from shadcn-plugin
+Promise.resolve(`${process.argv[2]}`).then(s => __importStar(require(s))).then((c) => console.log(JSON.stringify(c.default, null, 2)));
 //# sourceMappingURL=config.js.map

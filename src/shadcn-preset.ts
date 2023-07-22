@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import tailwindCssAnimate from "tailwindcss-animate";
 import { shadcnPlugin } from "./shadcn-plugin";
-import { doesThemeExist } from "./doesThemeExist";
+import { resolveThemeDir } from "./resolver";
 
 export const shadcnPreset = (
   {
@@ -17,9 +17,8 @@ export const shadcnPreset = (
     themeDir: `${__dirname}/themes`,
   }
 ): Config => {
-  if (!doesThemeExist(theme, themeDir)) {
-    throw new Error(`Invalid theme specified: '${themeDir}/${theme}'`);
-  }
+  // resolve relative paths in the calling context
+  themeDir = resolveThemeDir(theme, themeDir);
   return {
     content: [],
     darkMode: "class",

@@ -1,8 +1,23 @@
 import * as fs from "fs";
 import * as path from "path";
+import {
+  themeColors,
+  ThemeColors,
+  generateThemes,
+  validateColors,
+} from "./theme_generator";
 
 async function main() {
   const dir = process.argv[2] ?? "./themes";
+  const { colors, invalidColors } = validateColors(
+    (process.argv[3] ?? "slate,sky").split(",")
+  );
+  if (invalidColors.length) {
+    console.error(`Invalid theme colors: ${invalidColors.join("\n")}\n`);
+    console.error(`Valid colors:\n${themeColors.map((c) => `  - ${c}\n`)}`);
+    process.exit(-1);
+  }
+
   const dst = path.resolve(dir);
   const src = path.resolve(`${__dirname}/../themes`);
   let stat;
@@ -24,8 +39,9 @@ async function main() {
     console.error(`Source and destination directories have be different`);
     process.exit(-1);
   }
-  fs.cpSync(src, dst, { recursive: true });
-  console.log(`custom shadcn themes initialized to '${dir}'`);
+  fs.copyFileSync(`${src}/config.js`, `${dst}/config.js`);
+  generateThemes(colors, dst, fs.writeFileSync);
+  console.log(`\ncustom shadcn-ui themes initialized to '${dir}'`);
 }
 
 main();

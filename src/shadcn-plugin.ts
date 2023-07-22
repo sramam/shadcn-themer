@@ -4,6 +4,8 @@ import cssLoaderSync from "./cssLoader";
 import configSync from "./config";
 import type { CssInJs } from "postcss-js";
 import { Config } from "tailwindcss";
+import { resolveThemeDir } from "./resolver";
+import path from "path";
 
 export const shadcnPlugin = ({
   themeDir,
@@ -14,8 +16,10 @@ export const shadcnPlugin = ({
   theme: string;
   debugDir?: string;
 }) => {
-  theme = `${theme}.css`.replace(".css.css", ".css");
-  const themeFile = `${themeDir}/${theme}`;
+  // resolve relative paths in the calling context
+  themeDir = resolveThemeDir(theme, themeDir);
+  // allow the user to specify theme as "theme_a" or "theme_a.css"
+  const themeFile = `${themeDir}/${path.parse(theme).name}.css`;
   const configFile = `${themeDir}/config.js`;
   return plugin(
     ({ addBase }) => addBase(loadBaseLayer(themeFile, debugDir)),

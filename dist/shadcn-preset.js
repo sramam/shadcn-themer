@@ -6,14 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.shadcnPreset = void 0;
 const tailwindcss_animate_1 = __importDefault(require("tailwindcss-animate"));
 const shadcn_plugin_1 = require("./shadcn-plugin");
-const doesThemeExist_1 = require("./doesThemeExist");
+const resolver_1 = require("./resolver");
 const shadcnPreset = ({ theme = "default", themeDir = "./themes", debugDir, } = {
     theme: "default",
     themeDir: `${__dirname}/themes`,
 }) => {
-    if (!(0, doesThemeExist_1.doesThemeExist)(theme, themeDir)) {
-        throw new Error(`Invalid theme specified: '${themeDir}/${theme}'`);
-    }
+    // resolve relative paths in the calling context
+    themeDir = (0, resolver_1.resolveThemeDir)(theme, themeDir);
     return {
         content: [],
         darkMode: "class",

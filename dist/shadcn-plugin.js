@@ -42,9 +42,13 @@ const plugin_1 = __importDefault(require("tailwindcss/plugin"));
 const fs = __importStar(require("fs"));
 const cssLoader_1 = __importDefault(require("./cssLoader"));
 const config_1 = __importDefault(require("./config"));
+const resolver_1 = require("./resolver");
+const path_1 = __importDefault(require("path"));
 const shadcnPlugin = ({ themeDir, theme, debugDir, }) => {
-    theme = `${theme}.css`.replace(".css.css", ".css");
-    const themeFile = `${themeDir}/${theme}`;
+    // resolve relative paths in the calling context
+    themeDir = (0, resolver_1.resolveThemeDir)(theme, themeDir);
+    // allow the user to specify theme as "theme_a" or "theme_a.css"
+    const themeFile = `${themeDir}/${path_1.default.parse(theme).name}.css`;
     const configFile = `${themeDir}/config.js`;
     return (0, plugin_1.default)(({ addBase }) => addBase(loadBaseLayer(themeFile, debugDir)), loadConfig(configFile, debugDir));
 };
