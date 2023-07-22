@@ -35,7 +35,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const theme_generator_1 = require("./theme_generator");
-const usage = () => `Usage: ${process.argv[1]} [color1,color2] [dir]`;
+const usage = () => [
+    `Usage: ${path.relative(process.cwd(), process.argv[1])} [color1,color2] [dir]`,
+    `  Available colors:\n${theme_generator_1.themeColors.map((c) => `    - ${c}\n`)}`,
+].join("\n");
 function main() {
     var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {

@@ -7,7 +7,14 @@ import {
   validateColors,
 } from "./theme_generator";
 
-const usage = () => `Usage: ${process.argv[1]} [color1,color2] [dir]`;
+const usage = () =>
+  [
+    `Usage: ${path.relative(
+      process.cwd(),
+      process.argv[1]
+    )} [color1,color2] [dir]`,
+    `  Available colors:\n${themeColors.map((c) => `    - ${c}\n`)}`,
+  ].join("\n");
 async function main() {
   if (["-h", "--help"].includes((process.argv[2] ?? "").toLowerCase())) {
     console.log(usage());
