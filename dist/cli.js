@@ -35,16 +35,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const theme_generator_1 = require("./theme_generator");
+const usage = () => `Usage: ${process.argv[1]} [color1,color2] [dir]`;
 function main() {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
-        const dir = (_a = process.argv[2]) !== null && _a !== void 0 ? _a : "./themes";
-        const { colors, invalidColors } = (0, theme_generator_1.validateColors)(((_b = process.argv[3]) !== null && _b !== void 0 ? _b : "slate,sky").split(","));
+        if (["-h", "--help"].includes(((_a = process.argv[2]) !== null && _a !== void 0 ? _a : "").toLowerCase())) {
+            console.log(usage());
+            process.exit(0);
+        }
+        const { colors, invalidColors } = (0, theme_generator_1.validateColors)(((_b = process.argv[2]) !== null && _b !== void 0 ? _b : "slate,sky,neutral").split(","));
         if (invalidColors.length) {
             console.error(`Invalid theme colors: ${invalidColors.join("\n")}\n`);
             console.error(`Valid colors:\n${theme_generator_1.themeColors.map((c) => `  - ${c}\n`)}`);
             process.exit(-1);
         }
+        const dir = (_c = process.argv[3]) !== null && _c !== void 0 ? _c : "./themes";
         const dst = path.resolve(dir);
         const src = path.resolve(`${__dirname}/../themes`);
         let stat;
@@ -59,7 +64,7 @@ function main() {
             stat = fs.statSync(dst, {});
         }
         if (!(stat === null || stat === void 0 ? void 0 : stat.isDirectory())) {
-            console.error(`Usage: ${process.argv[1]} [dir]`);
+            console.error(usage());
             console.error(` '${dst}' is not a directory`);
             process.exit(-1);
         }

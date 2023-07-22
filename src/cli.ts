@@ -7,16 +7,21 @@ import {
   validateColors,
 } from "./theme_generator";
 
+const usage = () => `Usage: ${process.argv[1]} [color1,color2] [dir]`;
 async function main() {
-  const dir = process.argv[2] ?? "./themes";
+  if (["-h", "--help"].includes((process.argv[2] ?? "").toLowerCase())) {
+    console.log(usage());
+    process.exit(0);
+  }
   const { colors, invalidColors } = validateColors(
-    (process.argv[3] ?? "slate,sky").split(",")
+    (process.argv[2] ?? "slate,sky,neutral").split(",")
   );
   if (invalidColors.length) {
     console.error(`Invalid theme colors: ${invalidColors.join("\n")}\n`);
     console.error(`Valid colors:\n${themeColors.map((c) => `  - ${c}\n`)}`);
     process.exit(-1);
   }
+  const dir = process.argv[3] ?? "./themes";
 
   const dst = path.resolve(dir);
   const src = path.resolve(`${__dirname}/../themes`);
@@ -31,7 +36,7 @@ async function main() {
     stat = fs.statSync(dst, {});
   }
   if (!stat?.isDirectory()) {
-    console.error(`Usage: ${process.argv[1]} [dir]`);
+    console.error(usage());
     console.error(` '${dst}' is not a directory`);
     process.exit(-1);
   }
