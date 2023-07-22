@@ -13,7 +13,7 @@ const usage = () =>
       process.cwd(),
       process.argv[1]
     )} [color1,color2] [dir]`,
-    `  Available colors:\n${themeColors.map((c) => `    - ${c}\n`)}`,
+    `  Available colors:\n${themeColors.map((c) => `    - ${c}`).join("\n")}`,
   ].join("\n");
 async function main() {
   if (["-h", "--help"].includes((process.argv[2] ?? "").toLowerCase())) {

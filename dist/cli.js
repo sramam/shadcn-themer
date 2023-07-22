@@ -37,7 +37,7 @@ const path = __importStar(require("path"));
 const theme_generator_1 = require("./theme_generator");
 const usage = () => [
     `Usage: ${path.relative(process.cwd(), process.argv[1])} [color1,color2] [dir]`,
-    `  Available colors:\n${theme_generator_1.themeColors.map((c) => `    - ${c}\n`)}`,
+    `  Available colors:\n${theme_generator_1.themeColors.map((c) => `    - ${c}`).join("\n")}`,
 ].join("\n");
 function main() {
     var _a, _b, _c;
