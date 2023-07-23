@@ -28,10 +28,12 @@ const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 function resolveThemeDir(theme, themeDir) {
     themeDir = resolvedDir(themeDir) || resolvedDir(`${__dirname}/../themes`);
-    if (!resolveTheme(theme, themeDir)) {
+    // this allows specifying partial theme names, ('slate' instead of 'theme_slate.css')
+    const _theme = resolveTheme(theme, themeDir);
+    if (!_theme) {
         throw new Error(`Invalid theme specified: '${themeDir}/${theme}'`);
     }
-    return themeDir;
+    return { themeDir, theme: _theme };
 }
 exports.resolveThemeDir = resolveThemeDir;
 const resolvedDir = (fPath) => {
@@ -52,7 +54,12 @@ function resolveTheme(theme, themeDir) {
     })
         .filter((f) => f.isFile() &&
         f.name.endsWith(".css") &&
-        [theme, `${theme}.css`].includes(f.name));
-    return themeDir;
+        [
+            theme,
+            `${theme}.css`,
+            `theme_${theme}`,
+            `theme_${theme}.css`,
+        ].includes(f.name));
+    return cssFiles[0].name;
 }
 //# sourceMappingURL=resolver.js.map

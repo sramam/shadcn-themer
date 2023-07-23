@@ -18,15 +18,15 @@ export const shadcnPreset = (
   }
 ): Config => {
   // resolve relative paths in the calling context
-  themeDir = resolveThemeDir(theme, themeDir);
+  const resolved = resolveThemeDir(theme, themeDir);
   return {
     content: [],
     darkMode: "class",
     plugins: [
       tailwindCssAnimate,
       shadcnPlugin({
-        themeDir,
-        theme,
+        themeDir: resolved.themeDir,
+        theme: resolved.theme,
         debugDir,
       }),
     ],

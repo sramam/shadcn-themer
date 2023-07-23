@@ -1,12 +1,17 @@
 import * as fs from "fs";
 import * as path from "path";
 
-export function resolveThemeDir(theme: string, themeDir: string): string {
+export function resolveThemeDir(
+  theme: string,
+  themeDir: string
+): { themeDir: string; theme: string } {
   themeDir = resolvedDir(themeDir) || resolvedDir(`${__dirname}/../themes`)!;
-  if (!resolveTheme(theme, themeDir)) {
+  // this allows specifying partial theme names, ('slate' instead of 'theme_slate.css')
+  const _theme = resolveTheme(theme, themeDir);
+  if (!_theme) {
     throw new Error(`Invalid theme specified: '${themeDir}/${theme}'`);
   }
-  return themeDir;
+  return { themeDir, theme: _theme };
 }
 
 const resolvedDir = (fPath: string) => {
@@ -29,7 +34,12 @@ function resolveTheme(theme: string, themeDir: string): string {
       (f) =>
         f.isFile() &&
         f.name.endsWith(".css") &&
-        [theme, `${theme}.css`].includes(f.name)
+        [
+          theme,
+          `${theme}.css`,
+          `theme_${theme}`,
+          `theme_${theme}.css`,
+        ].includes(f.name)
     );
-  return themeDir;
+  return cssFiles[0].name;
 }

@@ -12,15 +12,15 @@ const shadcnPreset = ({ theme = "default", themeDir = "./themes", debugDir, } = 
     themeDir: `${__dirname}/themes`,
 }) => {
     // resolve relative paths in the calling context
-    themeDir = (0, resolver_1.resolveThemeDir)(theme, themeDir);
+    const resolved = (0, resolver_1.resolveThemeDir)(theme, themeDir);
     return {
         content: [],
         darkMode: "class",
         plugins: [
             tailwindcss_animate_1.default,
             (0, shadcn_plugin_1.shadcnPlugin)({
-                themeDir,
-                theme,
+                themeDir: resolved.themeDir,
+                theme: resolved.theme,
                 debugDir,
             }),
         ],

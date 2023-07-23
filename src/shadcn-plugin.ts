@@ -17,10 +17,10 @@ export const shadcnPlugin = ({
   debugDir?: string;
 }) => {
   // resolve relative paths in the calling context
-  themeDir = resolveThemeDir(theme, themeDir);
+  const resolved = resolveThemeDir(theme, themeDir);
   // allow the user to specify theme as "theme_a" or "theme_a.css"
-  const themeFile = `${themeDir}/${path.parse(theme).name}.css`;
-  const configFile = `${themeDir}/config.js`;
+  const themeFile = `${resolved.themeDir}/${resolved.theme}`;
+  const configFile = `${resolved.themeDir}/config.js`;
   return plugin(
     ({ addBase }) => addBase(loadBaseLayer(themeFile, debugDir)),
     loadConfig(configFile, debugDir)
