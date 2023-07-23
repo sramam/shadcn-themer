@@ -14,7 +14,9 @@ const shadcnPreset = ({ theme = "default", themeDir = `${process.cwd()}/node_mod
     // resolve relative paths in the calling context
     const resolved = (0, resolver_1.resolveThemeDir)(theme, themeDir);
     return {
-        content: [],
+        content: [
+            `${resolved.themeDir}/*`,
+        ],
         darkMode: "class",
         plugins: [
             tailwindcss_animate_1.default,

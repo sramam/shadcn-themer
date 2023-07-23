@@ -41,7 +41,7 @@ exports.shadcnPlugin = void 0;
 const plugin_1 = __importDefault(require("tailwindcss/plugin"));
 const fs = __importStar(require("fs"));
 const cssLoader_1 = __importDefault(require("./cssLoader"));
-const config_1 = __importDefault(require("./config"));
+const configSync_1 = __importDefault(require("./configSync"));
 const resolver_1 = require("./resolver");
 const shadcnPlugin = ({ themeDir, theme, debugDir, }) => {
     // resolve relative paths in the calling context
@@ -74,7 +74,7 @@ function loadConfig(configFile, debugDir) {
     let config = { content: [] };
     let error = null;
     try {
-        config = (0, config_1.default)(configFile);
+        config = (0, configSync_1.default)(configFile);
     }
     catch (err) {
         error = err;

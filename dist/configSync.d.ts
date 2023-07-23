@@ -4,4 +4,4 @@ import type { Config } from "tailwindcss";
  * Tailwind config [doesn't support async functions](https://github.com/tailwindlabs/tailwindcss/issues/11655)
  */
 export default function configSync(fPath: string): Config;
-//# sourceMappingURL=index.d.ts.map
+//# sourceMappingURL=configSync.d.ts.map

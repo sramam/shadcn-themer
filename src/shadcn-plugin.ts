@@ -1,7 +1,7 @@
 import plugin from "tailwindcss/plugin";
 import * as fs from "fs";
 import cssLoaderSync from "./cssLoader";
-import configSync from "./config";
+import configSync from "./configSync";
 import type { CssInJs } from "postcss-js";
 import { Config } from "tailwindcss";
 import { resolveThemeDir } from "./resolver";

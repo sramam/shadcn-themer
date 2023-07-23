@@ -20,7 +20,9 @@ export const shadcnPreset = (
   // resolve relative paths in the calling context
   const resolved = resolveThemeDir(theme, themeDir);
   return {
-    content: [],
+    content: [
+      `${resolved.themeDir}/*`,
+    ],
     darkMode: "class",
     plugins: [
       tailwindCssAnimate,

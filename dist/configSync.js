@@ -20,4 +20,4 @@ function configSync(fPath) {
     }
 }
 exports.default = configSync;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=configSync.js.map
