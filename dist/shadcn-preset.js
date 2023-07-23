@@ -7,9 +7,9 @@ exports.shadcnPreset = void 0;
 const tailwindcss_animate_1 = __importDefault(require("tailwindcss-animate"));
 const shadcn_plugin_1 = require("./shadcn-plugin");
 const resolver_1 = require("./resolver");
-const shadcnPreset = ({ theme = "default", themeDir = "./themes", debugDir, } = {
+const shadcnPreset = ({ theme = "default", themeDir = `${process.cwd()}/node_modules/shadcn-themer/themes`, debugDir, } = {
     theme: "default",
-    themeDir: `${__dirname}/themes`,
+    themeDir: `${process.cwd()}/node_modules/shadcn-themer/themes`,
 }) => {
     // resolve relative paths in the calling context
     const resolved = (0, resolver_1.resolveThemeDir)(theme, themeDir);

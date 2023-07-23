@@ -6,7 +6,7 @@ import { resolveThemeDir } from "./resolver";
 export const shadcnPreset = (
   {
     theme = "default",
-    themeDir = "./themes",
+    themeDir = `${process.cwd()}/node_modules/shadcn-themer/themes`,
     debugDir,
   }: {
     theme?: string;
@@ -14,7 +14,7 @@ export const shadcnPreset = (
     debugDir?: string;
   } = {
     theme: "default",
-    themeDir: `${__dirname}/themes`,
+    themeDir: `${process.cwd()}/node_modules/shadcn-themer/themes`,
   }
 ): Config => {
   // resolve relative paths in the calling context

@@ -5,7 +5,6 @@ import configSync from "./config";
 import type { CssInJs } from "postcss-js";
 import { Config } from "tailwindcss";
 import { resolveThemeDir } from "./resolver";
-import path from "path";
 
 export const shadcnPlugin = ({
   themeDir,
