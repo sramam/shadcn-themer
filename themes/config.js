@@ -2,7 +2,7 @@
  * Binds css variables defined in `theme.css` to tailwind config
  * This can be extended in dependent modules to fit custom needs.
  * To customize, `shadcn-themer customize [dir]` dir defaults to './themes'.
- * 
+ *
  * NOTE: Currently, this needs to be a JavaScript file.
  */
 
@@ -50,6 +50,22 @@ const config = {
         card: {
           DEFAULT: "var(--card)",
           foreground: "var(--card-foreground)",
+        },
+        info: {
+          DEFAULT: "var(--info)",
+          foreground: "var(--info-foreground)",
+        },
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+        },
+        warning: {
+          DEFAULT: "var(--warning)",
+          foreground: "var(--warning-foreground)",
+        },
+        error: {
+          DEFAULT: "var(--error)",
+          foreground: "var(--error-foreground)",
         },
       },
       borderRadius: {

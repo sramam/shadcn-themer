@@ -34,6 +34,16 @@
     --ring: #38bdf8;                    /* sky-400 */
   
     --radius: 0.5rem;
+  
+    --info: #bae6fd;                    /* sky-200 */
+    --info-foreground: #082f49;         /* sky-950 */
+    --success: #86efac;                 /* green-300 */
+    --success-foreground: #052e16;      /* green-950 */
+    --warning: #fef08a;                 /* yellow-200 */
+    --warning-foreground: #422006;      /* yellow-950 */
+    --error: #fca5a5;                   /* red-300 */
+    --error-foreground: #450a0a;        /* red-950 */
+  
   }
   
   .dark {
@@ -65,6 +75,16 @@
     --destructive-foreground: #fef2f2;  /* sky-50 */
   
     --ring: [object Object];
+  
+    --info: #bae6fd;                    /* sky-200 */
+    --info-foreground: #082f49;         /* sky-950 */
+    --success: #86efac;                 /* green-300 */
+    --success-foreground: #052e16;      /* green-950 */
+    --warning: #fef08a;                 /* yellow-200 */
+    --warning-foreground: #422006;      /* yellow-950 */
+    --error: #fca5a5;                   /* red-300 */
+    --error-foreground: #450a0a;        /* red-950 */
+  
   }
 }
   

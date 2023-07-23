@@ -36,8 +36,18 @@ const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const theme_generator_1 = require("./theme_generator");
 const usage = () => [
-    `Usage: ${path.relative(process.cwd(), process.argv[1])} [color1,color2] [dir]`,
-    `  Available colors:\n${theme_generator_1.themeColors.map((c) => `    - ${c}`).join("\n")}`,
+    `Usage: npx shadcn-themer [colors] [dir]`,
+    ` Generates theme files to meet shadcn-ui needs`,
+    ``,
+    `ARGUMENTS:`,
+    `  colors - comma-separated-list (multiple themes). See below for available colors.`,
+    `  dir - directory for generated files. Defaults to './themes'`,
+    ``,
+    `NOTES:`,
+    `  - Once generated, the theme files can be renamed`,
+    `  - Within tailwind.config, they can be used with or without the "theme_" prefix`,
+    `  - Available colors:\n${theme_generator_1.themeColors.map((c) => `    - ${c}`).join("\n")}`,
+    ``,
 ].join("\n");
 function main() {
     var _a, _b, _c;

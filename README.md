@@ -29,18 +29,46 @@ export default {
 
 ## Custom themes
 `shadcn-themer` is designed to make it easy to create custom themes.
-It provides a convenience cli command
+It provides a convenience cli command to generate custom themes
 
 ```
-npx shadcn-themer [dir]
+❯ npx shadcn-themer -h
+Usage: npx shadcn-themer [colors] [dir]
+ Generates theme files to meet shadcn-ui needs
+
+ARGUMENTS:
+  colors - comma-separated-list (multiple themes). See below for available colors.
+  dir - directory for generated files. Defaults to './themes'
+
+NOTES:
+  - Once generated, the theme files can be renamed
+  - Within tailwind.config, they can be used with or without the "theme_" prefix
+  - Available colors:
+    - slate
+    - gray
+    - zinc
+    - neutral
+    - stone
+    - red
+    - orange
+    - amber
+    - yellow
+    - lime
+    - green
+    - emerald
+    - teal
+    - cyan
+    - sky
+    - blue
+    - indigo
+    - violet
+    - purple
+    - fuchsia
+    - pink
+    - rose
 ```
 
-This creates a local copy of a default and a few custom themes in `dir`. This serves as a goos starting point to create custom
-themes and any extensions you might want your projects.
-
-`dir` defaults to `./themes` from `cwd`.
-
-If custom themes are used, `tailwind.config.ts` is transformed as below. `theme` & `themesDir` parameters can be set directly or via environment variables as shown.
+To use custom themes, `tailwind.config.ts` is transformed as below. `theme` & `themeDir` parameters can be set directly or via environment variables as shown.
 
 ```
 import type { Config } from "tailwindcss";
@@ -49,7 +77,7 @@ import { shadcnPreset } from "shadcn-themer";
 export default {
   presets: [ await shadcnPreset({
     theme: process.env.THEME
-    themesDir: process.env.THEMES_DIR
+    themeDir: process.env.THEME_DIR
   })]
   content: [
     './@/**/*.{jsx,tsx}',
