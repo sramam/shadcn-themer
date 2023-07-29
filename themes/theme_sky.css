@@ -74,7 +74,9 @@
     --destructive: #7f1d1d;             /* sky-900 */
     --destructive-foreground: #fef2f2;  /* sky-50 */
   
-    --ring: [object Object];
+    --ring: #075985;                    /* sky-800 */
+  
+    --radius: 0.5rem;
   
     --info: #bae6fd;                    /* sky-200 */
     --info-foreground: #082f49;         /* sky-950 */
